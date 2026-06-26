@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Autofom — Automatización y Formalización Empresarial</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a09;--surface:#111110;--surface2:#191918;--surface3:#212120;
+  --text:#f0ede8;--text-sec:#9e9c94;--text-muted:#5a5955;
+  --border:rgba(255,255,255,0.07);--border-strong:rgba(255,255,255,0.13);
+  --accent:#3987e5;--accent-dim:rgba(57,135,229,0.12);
+  --green:#1d9e75;--green-dim:rgba(29,158,117,0.12);
+  --purple:#8b7fe8;--purple-dim:rgba(139,127,232,0.12);
+  --r:8px;
+}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;font-size:15px;overflow-x:hidden}
+nav{position:sticky;top:0;z-index:200;background:rgba(10,10,9,0.85);backdrop-filter:blur(16px);border-bottom:0.5px solid var(--border)}
+.nav-inner{max-width:1000px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:58px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-icon{width:30px;height:30px;background:var(--accent);border-radius:7px;display:flex;align-items:center;justify-content:center}
+.logo-icon svg{width:16px;height:16px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round}
+.logo-text{font-size:16px;font-weight:700;color:var(--text);letter-spacing:-0.03em}
+.logo-text span{color:var(--accent)}
+.nav-links{display:flex;gap:1.75rem}
+.nav-links a{font-size:13px;color:var(--text-sec);text-decoration:none;transition:color .15s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{background:var(--accent);color:#fff;padding:8px 18px;border-radius:var(--r);text-decoration:none;font-size:13px;font-weight:500}
+.nav-cta:hover{opacity:.88}
+@media(max-width:660px){.nav-links{display:none}}
+.ticker-wrap{overflow:hidden;border-bottom:0.5px solid var(--border);background:var(--surface);padding:.55rem 0}
+.ticker{display:flex;white-space:nowrap;animation:tick 24s linear infinite}
+@keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ticker-item{display:inline-flex;align-items:center;gap:.4rem;font-size:12px;color:var(--text-muted);padding:0 2rem}
+.ticker-item b{color:var(--accent);font-weight:600}
+section{padding:5rem 1.5rem}
+.container{max-width:1000px;margin:0 auto}
+.s-tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;padding:4px 12px;border-radius:100px;margin-bottom:1rem}
+.s-tag.blue{background:var(--accent-dim);color:#7ab4f5}
+.s-tag.green{background:var(--green-dim);color:#5dcaa5}
+.s-tag.purple{background:var(--purple-dim);color:#c5bff7}
+.s-title{font-size:clamp(26px,4vw,40px);font-weight:800;letter-spacing:-0.03em;margin-bottom:.75rem;line-height:1.1}
+.s-desc{font-size:15px;color:var(--text-sec);max-width:520px;margin-bottom:2.5rem;line-height:1.75}
+hr.div{border:none;border-top:0.5px solid var(--border);margin:0}
+#inicio{padding:6.5rem 1.5rem 5rem;position:relative;overflow:hidden}
+.hero-glow{position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:700px;height:450px;background:radial-gradient(ellipse,rgba(57,135,229,0.08) 0%,transparent 70%);pointer-events:none}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:500;color:var(--accent);border:0.5px solid rgba(57,135,229,0.3);padding:4px 14px;border-radius:100px;margin-bottom:1.5rem}
+.edot{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+.hero h1{font-size:clamp(38px,6.5vw,64px);font-weight:800;line-height:1.07;letter-spacing:-0.04em;margin-bottom:1.25rem;max-width:700px}
+.hero h1 .ac{color:var(--accent)}.hero h1 .gr{color:var(--green)}
+.hero-desc{font-size:17px;color:var(--text-sec);max-width:500px;margin-bottom:2rem;line-height:1.75}
+.hero-btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:4rem}
+.btn-p{background:var(--accent);color:#fff;padding:13px 26px;border-radius:var(--r);text-decoration:none;font-weight:600;font-size:14px}
+.btn-p:hover{opacity:.88}
+.btn-s{background:var(--surface2);color:var(--text);padding:13px 26px;border-radius:var(--r);text-decoration:none;font-size:14px;border:0.5px solid var(--border-strong)}
+.btn-s:hover{background:var(--surface3)}
+.hero-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:0.5px solid var(--border);border-radius:14px;overflow:hidden}
+.hm{background:var(--surface);padding:1.5rem;text-align:center}
+.hm-val{font-size:30px;font-weight:800;letter-spacing:-0.03em;margin-bottom:3px}
+.hm-label{font-size:12px;color:var(--text-sec)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);border:0.5px solid var(--border);border-radius:14px;overflow:hidden}
+@media(max-width:680px){.steps{grid-template-columns:1fr 1fr}}
+@media(max-width:400px){.steps{grid-template-columns:1fr}}
+.step{padding:1.5rem;background:var(--surface);border-right:0.5px solid var(--border)}
+.step:last-child{border-right:none}
+@media(max-width:680px){.step:nth-child(even){border-right:none}.step:nth-child(n+3){border-top:0.5px solid var(--border)}}
+@media(max-width:400px){.step{border-right:none;border-top:0.5px solid var(--border)}.step:first-child{border-top:none}}
+.step-num{font-size:11px;font-weight:700;color:var(--text-muted);letter-spacing:.05em;margin-bottom:12px}
+.step-ico{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;font-size:18px}
+.ico-blue{background:var(--accent-dim)}.ico-green{background:var(--green-dim)}.ico-purple{background:var(--purple-dim)}.ico-gray{background:var(--surface3)}
+.step-title{font-size:14px;font-weight:700;margin-bottom:5px}
+.step-desc{font-size:12px;color:var(--text-sec);line-height:1.55}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.card{background:var(--surface2);border:0.5px solid var(--border);border-radius:14px;padding:1.5rem;transition:border-color .2s}
+.card:hover{border-color:var(--border-strong)}
+.card.feat{border-color:rgba(57,135,229,0.35);background:rgba(57,135,229,0.03)}
+.ctag{display:inline-block;font-size:11px;font-weight:600;padding:3px 10px;border-radius:100px;margin-bottom:14px}
+.ctag-b{background:var(--accent-dim);color:#7ab4f5}
+.ctag-g{background:var(--green-dim);color:#5dcaa5}
+.ctag-p{background:var(--purple-dim);color:#c5bff7}
+.card-name{font-size:17px;font-weight:700;margin-bottom:6px}
+.card-desc{font-size:13px;color:var(--text-sec);margin-bottom:1.25rem;line-height:1.55}
+.card-price{font-size:26px;font-weight:800;letter-spacing:-0.02em}
+.cpu{font-size:13px;font-weight:400;color:var(--text-muted)}
+.cps{font-size:12px;color:var(--text-muted);margin-top:4px;margin-bottom:1rem}
+.feats{list-style:none;border-top:0.5px solid var(--border);padding-top:12px}
+.feats li{font-size:13px;color:var(--text-sec);padding:5px 0;display:flex;gap:8px;align-items:flex-start;border-bottom:0.5px solid var(--border)}
+.feats li:last-child{border-bottom:none}
+.chk{flex-shrink:0;color:var(--green);font-size:14px;margin-top:1px}
+.flow-visual{background:var(--surface);border:0.5px solid var(--border);border-radius:14px;padding:1.75rem;margin-bottom:1.5rem}
+.fv-label{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:1.25rem}
+.flow-nodes{display:flex;align-items:center;overflow-x:auto;padding-bottom:4px;gap:0}
+.fnode{background:var(--surface2);border:0.5px solid var(--border);border-radius:10px;padding:.7rem 1rem;min-width:110px;flex-shrink:0}
+.fnode.on{border-color:rgba(57,135,229,0.4);background:rgba(57,135,229,0.07)}
+.fnode-ico{font-size:17px;margin-bottom:4px}
+.fnode-name{font-size:11px;font-weight:600;color:var(--text);margin-bottom:1px}
+.fnode.on .fnode-name{color:#7ab4f5}
+.fnode-sub{font-size:10px;color:var(--text-muted)}
+.farrow{color:var(--text-muted);padding:0 7px;flex-shrink:0;font-size:14px}
+.info-box{background:var(--surface2);border:0.5px solid var(--border);border-left:2px solid var(--accent);border-radius:0 10px 10px 0;padding:1rem 1.25rem;margin-top:1.25rem}
+.info-box p{font-size:13px;color:var(--text-sec);line-height:1.65}
+.info-box strong{color:var(--text)}
+.team{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.tcard{background:var(--surface2);border:0.5px solid var(--border);border-radius:14px;padding:1.5rem;display:flex;gap:16px;align-items:flex-start}
+.tav{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;flex-shrink:0}
+.tav.b{background:var(--accent-dim);color:#7ab4f5}
+.tav.g{background:var(--green-dim);color:#5dcaa5}
+.tname{font-size:16px;font-weight:700;margin-bottom:2px}
+.trole{font-size:12px;color:var(--text-muted);margin-bottom:10px}
+.tskills{display:flex;flex-wrap:wrap;gap:5px}
+.tskill{font-size:11px;padding:3px 9px;border-radius:100px;border:0.5px solid var(--border-strong);color:var(--text-sec)}
+#contacto{background:var(--surface)}
+.cw{max-width:560px;margin:0 auto;text-align:center}
+.cw h2{font-size:clamp(28px,4vw,42px);font-weight:800;letter-spacing:-0.03em;margin-bottom:1rem;line-height:1.1}
+.cw p{color:var(--text-sec);margin-bottom:2rem;font-size:15px;line-height:1.75}
+.cbtns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.cinfo{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem}
+.citem{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-sec)}
+.citem a{color:var(--text-sec);text-decoration:none}
+.citem a:hover{color:var(--text)}
+.cico{width:28px;height:28px;border-radius:6px;background:var(--surface2);border:0.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:13px}
+footer{padding:2rem 1.5rem;border-top:0.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.flogo{font-size:14px;font-weight:700;letter-spacing:-0.02em;color:var(--text-sec)}
+.flogo span{color:var(--accent)}
+footer p{font-size:12px;color:var(--text-muted)}
+.fade-up{opacity:0;transform:translateY(22px);transition:opacity .55s ease,transform .55s ease}
+.fade-up.visible{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#inicio" class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 16 16"><path d="M2 8h3M11 8h3M8 2v3M8 11v3"/><circle cx="8" cy="8" r="2.5"/></svg>
+      </div>
+      <span class="logo-text">Auto<span>fom</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="#proceso">Cómo funciona</a>
+      <a href="#formalizacion">Formalización</a>
+      <a href="#automatizacion">Automatización</a>
+      <a href="#desarrollo">Desarrollo</a>
+      <a href="#nosotros">Nosotros</a>
+    </div>
+    <a href="#contacto" class="nav-cta">Contactar</a>
+  </div>
+</nav>
+
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span class="ticker-item">⚡ <b>Automatización</b> con IA</span>
+    <span class="ticker-item">📋 <b>Formalización</b> empresarial</span>
+    <span class="ticker-item">💻 <b>Desarrollo</b> web a medida</span>
+    <span class="ticker-item">🤖 <b>Chatbots</b> inteligentes</span>
+    <span class="ticker-item">📊 <b>Dashboards</b> internos</span>
+    <span class="ticker-item">🏢 <b>SII</b> y tributario</span>
+    <span class="ticker-item">⚡ <b>Automatización</b> con IA</span>
+    <span class="ticker-item">📋 <b>Formalización</b> empresarial</span>
+    <span class="ticker-item">💻 <b>Desarrollo</b> web a medida</span>
+    <span class="ticker-item">🤖 <b>Chatbots</b> inteligentes</span>
+    <span class="ticker-item">📊 <b>Dashboards</b> internos</span>
+    <span class="ticker-item">🏢 <b>SII</b> y tributario</span>
+  </div>
+</div>
+
+<section id="inicio">
+  <div class="hero-glow"></div>
+  <div class="container">
+    <div class="hero-eyebrow"><span class="edot"></span> Disponible en Chile y extranjero</div>
+    <h1>Tu negocio,<br><span class="ac">automatizado</span><br>y <span class="gr">formalizado</span>.</h1>
+    <p class="hero-desc">Formalizamos tu empresa ante el SII, automatizamos tus procesos con inteligencia artificial y construimos las herramientas digitales que necesitas para crecer.</p>
+    <div class="hero-btns">
+      <a href="#proceso" class="btn-p">Ver cómo funciona</a>
+      <a href="#contacto" class="btn-s">Hablar con nosotros</a>
+    </div>
+    <div class="hero-metrics fade-up">
+      <div class="hm"><div class="hm-val" style="color:var(--accent)">3</div><div class="hm-label">Líneas de servicio</div></div>
+      <div class="hm"><div class="hm-val" style="color:var(--green)">24h</div><div class="hm-label">Tiempo de respuesta</div></div>
+      <div class="hm"><div class="hm-val" style="color:var(--purple)">100%</div><div class="hm-label">Hecho a medida</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="div">
+
+<section id="proceso">
+  <div class="container fade-up">
+    <div class="s-tag blue">Cómo funciona</div>
+    <h2 class="s-title">De emprendimiento informal<br>a negocio que funciona solo</h2>
+    <p class="s-desc">Cuatro etapas. Entras por donde lo necesitas y escalas a tu ritmo, sin compromisos largos.</p>
+    <div class="steps">
+      <div class="step"><div class="step-num">01</div><div class="step-ico ico-green">📋</div><div class="step-title">Formalizamos</div><div class="step-desc">Constituimos tu empresa, inicio de actividades en SII y te dejamos facturando desde el día uno.</div></div>
+      <div class="step"><div class="step-num">02</div><div class="step-ico ico-blue">⚡</div><div class="step-title">Automatizamos</div><div class="step-desc">Identificamos qué tareas repetitivas te quitan tiempo y las dejamos corriendo solas con IA.</div></div>
+      <div class="step"><div class="step-num">03</div><div class="step-ico ico-purple">💻</div><div class="step-title">Desarrollamos</div><div class="step-desc">Página web o dashboard interno construido a medida y conectado a tus automatizaciones.</div></div>
+      <div class="step"><div class="step-num">04</div><div class="step-ico ico-gray">🔄</div><div class="step-title">Mantenemos</div><div class="step-desc">Cuota mensual baja para que todo siga funcionando sin que tengas que preocuparte de nada técnico.</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="div">
+
+<section id="formalizacion">
+  <div class="container fade-up">
+    <div class="s-tag green">Formalización empresarial</div>
+    <h2 class="s-title">Opera legalmente<br>desde el día uno</h2>
+    <p class="s-desc">Para emprendimientos informales que quieren dar el salto. Sin trámites confusos ni vueltas innecesarias con el SII.</p>
+    <div class="cards">
+      <div class="card">
+        <span class="ctag ctag-g">Pago único</span>
+        <div class="card-name">Pack inicio empresarial</div>
+        <div class="card-desc">Todo lo que necesita tu negocio para funcionar legalmente en Chile desde el primer día.</div>
+        <div class="card-price">$150.000 <span class="cpu">CLP</span></div>
+        <div class="cps">pago único · sin costos ocultos</div>
+        <ul class="feats">
+          <li><span class="chk">✓</span>Constitución SpA o E.I.R.L.</li>
+          <li><span class="chk">✓</span>Inicio de actividades SII</li>
+          <li><span class="chk">✓</span>Configuración facturación electrónica</li>
+          <li><span class="chk">✓</span>Asesoría régimen tributario</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="ctag ctag-g">Mensual</span>
+        <div class="card-name">Mantención tributaria</div>
+        <div class="card-desc">Acompañamiento continuo para que tu negocio esté siempre al día con el SII, sin sorpresas.</div>
+        <div class="card-price">$60.000 <span class="cpu">CLP/mes</span></div>
+        <div class="cps">sin contratos largos · cancela cuando quieras</div>
+        <ul class="feats">
+          <li><span class="chk">✓</span>Declaración IVA mensual (F29)</li>
+          <li><span class="chk">✓</span>Control de boletas y facturas</li>
+          <li><span class="chk">✓</span>Consultas tributarias ilimitadas</li>
+          <li><span class="chk">✓</span>Aviso previo a vencimientos</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="div">
+
+<section id="automatizacion">
+  <div class="container fade-up">
+    <div class="s-tag blue">Automatización con IA</div>
+    <h2 class="s-title">Deja de hacer<br>lo que puede hacer una máquina</h2>
+    <p class="s-desc">Conectamos tus herramientas, automatizamos procesos repetitivos e integramos inteligencia artificial real en tu negocio.</p>
+    <div class="flow-visual">
+      <div class="fv-label">Ejemplo de flujo automatizado</div>
+      <div class="flow-nodes">
+        <div class="fnode"><div class="fnode-ico">📱</div><div class="fnode-name">WhatsApp</div><div class="fnode-sub">Cliente escribe</div></div>
+        <div class="farrow">→</div>
+        <div class="fnode on"><div class="fnode-ico">🤖</div><div class="fnode-name">IA procesa</div><div class="fnode-sub">Entiende y clasifica</div></div>
+        <div class="farrow">→</div>
+        <div class="fnode"><div class="fnode-ico">📊</div><div class="fnode-name">Google Sheets</div><div class="fnode-sub">Registra automático</div></div>
+        <div class="farrow">→</div>
+        <div class="fnode on"><div class="fnode-ico">💬</div><div class="fnode-name">Respuesta</div><div class="fnode-sub">Enviada al instante</div></div>
+        <div class="farrow">→</div>
+        <div class="fnode"><div class="fnode-ico">✅</div><div class="fnode-name">Listo</div><div class="fnode-sub">Sin intervención</div></div>
+      </div>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <span class="ctag ctag-b">Setup + mensual</span>
+        <div class="card-name">Plan básico</div>
+        <div class="card-desc">Para negocios que quieren dar sus primeros pasos en automatización sin complicarse.</div>
+        <div class="card-price">$80.000 <span class="cpu">CLP setup</span></div>
+        <div class="cps">+ $45.000/mes mantención</div>
+        <ul class="feats">
+          <li><span class="chk">✓</span>Hasta 3 flujos automáticos</li>
+          <li><span class="chk">✓</span>Reportes automáticos a Google Sheets</li>
+          <li><span class="chk">✓</span>Notificaciones WhatsApp / Email</li>
+          <li><span class="chk">✓</span>Soporte por chat</li>
+        </ul>
+      </div>
+      <div class="card feat">
+        <span class="ctag ctag-b">Más completo</span>
+        <div class="card-name">Plan pro</div>
+        <div class="card-desc">Automatización real con inteligencia artificial. Para negocios que quieren escalar de verdad.</div>
+        <div class="card-price">$250.000 <span class="cpu">CLP setup</span></div>
+        <div class="cps">+ $80.000/mes · ~85 USD para extranjeros</div>
+        <ul class="feats">
+          <li><span class="chk">✓</span>Flujos ilimitados</li>
+          <li><span class="chk">✓</span>Chatbot con IA y contexto de tu negocio</li>
+          <li><span class="chk">✓</span>Extracción de datos de documentos</li>
+          <li><span class="chk">✓</span>Integración WhatsApp Business</li>
+          <li><span class="chk">✓</span>Soporte prioritario</li>
+        </ul>
+      </div>
+    </div>
+    <div class="info-box">
+      <p>Todo corre en un <strong>servidor propio</strong>, no en plataformas de terceros. Tu negocio no depende de que otro servicio suba sus precios o cambie sus condiciones de un día para otro.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="div">
+
+<section id="desarrollo">
+  <div class="container fade-up">
+    <div class="s-tag purple">Desarrollo web</div>
+    <h2 class="s-title">Herramientas digitales<br>hechas a tu medida</h2>
+    <p class="s-desc">Páginas web y dashboards internos que se abren en cualquier celular, sin instalar nada.</p>
+    <div class="cards">
+      <div class="card">
+        <span class="ctag ctag-p">Proyecto único</span>
+        <div class="card-name">Página web empresarial</div>
+        <div class="card-desc">Sitio rápido y profesional para presentar tu negocio. Sin tecnicismos, entrega en menos de 2 semanas.</div>
+        <div class="card-price">$200.000 <span class="cpu">CLP</span></div>
+        <div class="cps">+ $20.000/mes mantención opcional</div>
+        <ul class="feats">
+          <li><span class="chk">✓</span>Diseño a medida</li>
+          <li><span class="chk">✓</span>Formulario de contacto conectado</li>
+          <li><span class="chk">✓</span>Versión móvil incluida</li>
+          <li><span class="chk">✓</span>Entrega en 7–10 días</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="ctag ctag-p">Proyecto único</span>
+        <div class="card-name">Dashboard / app interna</div>
+        <div class="card-desc">Panel web para gestionar las operaciones de tu empresa. Se abre en el navegador, sin instalaciones.</div>
+        <div class="card-price">$350.000 – $600.000 <span class="cpu">CLP</span></div>
+        <div class="cps">según complejidad · + mantención mensual</div>
+        <ul class="feats">
+          <li><span class="chk">✓</span>Gestión de inventario, clientes o agenda</li>
+          <li><span class="chk">✓</span>Reportes visuales en tiempo real</li>
+          <li><span class="chk">✓</span>Integrado con tus automatizaciones</li>
+          <li><span class="chk">✓</span>Entrega en 15–20 días</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="div">
+
+<section id="nosotros">
+  <div class="container fade-up">
+    <div class="s-tag blue">El equipo</div>
+    <h2 class="s-title">Dos áreas complementarias,<br>un solo servicio</h2>
+    <p class="s-desc">No necesitas contratar a tres personas distintas. Cubrimos el lado técnico y el legal juntos, con una sola cuota.</p>
+    <div class="team">
+      <div class="tcard">
+        <div class="tav b">RC</div>
+        <div>
+          <div class="tname">Renato Carrasco</div>
+          <div class="trole">Automatización · Desarrollo · RRSS</div>
+          <div class="tskills">
+            <span class="tskill">n8n</span><span class="tskill">IA / Claude API</span><span class="tskill">React</span><span class="tskill">Make</span><span class="tskill">Redes sociales</span>
+          </div>
+        </div>
+      </div>
+      <div class="tcard">
+        <div class="tav g">AC</div>
+        <div>
+          <div class="tname">Alfonso Concha</div>
+          <div class="trole">Finanzas · Formalización · Tributario</div>
+          <div class="tskills">
+            <span class="tskill">SII</span><span class="tskill">Contabilidad</span><span class="tskill">Constitución empresa</span><span class="tskill">F29</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="div">
+
+<section id="contacto">
+  <div class="container fade-up">
+    <div class="cw">
+      <div class="s-tag blue" style="margin:0 auto 1rem">Contacto</div>
+      <h2>¿Listo para empezar?</h2>
+      <p>Cuéntanos qué necesita tu negocio y te respondemos en menos de 24 horas con una propuesta concreta y sin compromisos.</p>
+      <div class="cbtns">
+        <a href="https://wa.me/56940111515" class="btn-p">Escribir por WhatsApp</a>
+        <a href="mailto:soporteautofom@gmail.com" class="btn-s">Enviar email</a>
+      </div>
+      <div class="cinfo">
+        <div class="citem"><div class="cico">📱</div><a href="https://wa.me/56940111515">+56 9 4011 1515</a></div>
+        <div class="citem"><div class="cico">✉️</div><a href="mailto:soporteautofom@gmail.com">soporteautofom@gmail.com</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="flogo">Auto<span>fom</span></span>
+  <p>© 2025 Autofom · Hecho en Chile · Para emprendimientos que quieren crecer</p>
+</footer>
+
+<script>
+const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible')})},{threshold:0.08})
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el))
+</script>
+</body>
+</html>
